@@ -42,7 +42,7 @@ export default function HomePage({ progress, masteredCount, setPage, setIslandFi
       {/* Stats */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-8">
         {[
-          {e:'📚',n:'1,800',l:'Total Sentences'},
+          {e:'📚',n:'2,600',l:'Total Sentences'},
           {e:'✅',n:masteredCount,l:'Mastered'},
           {e:'🏝️',n:'9',l:'Islands'},
           {e:'💬',n:'100',l:'Phrasal Verbs'},
