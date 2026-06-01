@@ -1,5 +1,6 @@
 const NAV = [
   { id:'home',    icon:'🏠', label:'Dashboard'       },
+  { id:'study',   icon:'🎯', label:'Study Mode'      },
   { id:'islands', icon:'🏝️', label:'Island Sentences' },
   { id:'phrasal', icon:'💬', label:'Phrasal Verbs'    },
   { id:'progress',icon:'📊', label:'Progress'         },
@@ -13,7 +14,6 @@ export default function Sidebar({ page, setPage, streak, signOut }) {
         <div className="text-base font-bold text-stone-800">📚 English Hub</div>
         <div className="text-xs text-stone-400 mt-0.5">softmark_2026</div>
       </div>
-
       <nav className="space-y-0.5 flex-1">
         {NAV.map(n => (
           <button key={n.id} onClick={() => setPage(n.id)}
@@ -22,7 +22,6 @@ export default function Sidebar({ page, setPage, streak, signOut }) {
           </button>
         ))}
       </nav>
-
       <div className="space-y-2 mt-3">
         <div className="bg-amber-50 border border-amber-200 rounded-xl p-3">
           <div className="flex items-center gap-2">
@@ -33,9 +32,7 @@ export default function Sidebar({ page, setPage, streak, signOut }) {
             </div>
           </div>
         </div>
-        <button onClick={signOut} className="w-full text-xs text-stone-400 hover:text-stone-600 py-1 transition-colors">
-          登出
-        </button>
+        <button onClick={signOut} className="w-full text-xs text-stone-400 hover:text-stone-600 py-1">登出</button>
       </div>
     </aside>
   )
