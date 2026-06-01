@@ -8,7 +8,7 @@ const NAV = [
 
 export default function Sidebar({ page, setPage, streak, signOut }) {
   return (
-    <aside className="w-52 flex-shrink-0 bg-stone-100/90 border-r border-stone-200 flex flex-col py-5 px-3 h-screen sticky top-0">
+    <aside className="w-52 flex-shrink-0 bg-stone-100/90 border-r border-stone-200 hidden md:flex flex-col py-5 px-3 h-screen sticky top-0">
       <div className="px-2 mb-6">
         <div className="text-base font-bold text-stone-800">📚 English Hub</div>
         <div className="text-xs text-stone-400 mt-0.5">softmark_2026</div>
