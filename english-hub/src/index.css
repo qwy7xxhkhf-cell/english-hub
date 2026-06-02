@@ -2,15 +2,40 @@
 @tailwind components;
 @tailwind utilities;
 
-* { box-sizing: border-box; }
-body { margin: 0; -webkit-font-smoothing: antialiased; }
-
-/* Mobile safe area */
-@supports (padding: env(safe-area-inset-bottom)) {
-  .pb-safe { padding-bottom: env(safe-area-inset-bottom); }
+/* ── Pinterest-style design tokens ── */
+:root {
+  --cream:   #faf6f1;
+  --sage:    #5a7a72;
+  --sage-l:  #e8ede9;
+  --terra:   #b8694a;
+  --terra-l: #f5ebe3;
+  --deep:    #2d4a42;
+  --warm:    #3d3530;
+  --sub:     #8c7b72;
+  --line:    rgba(61,53,48,.09);
+  --card-1:  #e8ede9;
+  --card-2:  #f5ebe3;
+  --card-3:  #ece8f0;
+  --card-4:  #f0ece4;
+  --card-5:  #fde8e8;
 }
+
+* { box-sizing: border-box; }
+
+body {
+  background: var(--cream);
+  color: var(--warm);
+  font-family: 'Noto Sans TC', system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Safe area for PWA */
+.pb-safe { padding-bottom: env(safe-area-inset-bottom); }
 
 /* Scrollbar */
 ::-webkit-scrollbar { width: 4px; }
 ::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: #d6d3d1; border-radius: 2px; }
+::-webkit-scrollbar-thumb { background: rgba(90,122,114,.2); border-radius: 2px; }
+
+/* Focus ring */
+*:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; border-radius: 4px; }
