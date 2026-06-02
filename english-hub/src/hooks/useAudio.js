@@ -1,52 +1,51 @@
 import { useState, useRef, useCallback } from 'react'
 
 export function useAudio() {
-  const audioRef   = useRef(null)
   const [playing,  setPlaying]  = useState(false)
   const [repsLeft, setRepsLeft] = useState(0)
-  const repsRef    = useRef(0)
-  const urlRef     = useRef('')
+  const activeRef = useRef(false)
+  const countRef  = useRef(0)
 
   const stop = useCallback(() => {
-    if (audioRef.current) {
-      audioRef.current.pause()
-      audioRef.current.currentTime = 0
-    }
+    activeRef.current = false
+    window.speechSynthesis?.cancel()
     setPlaying(false)
     setRepsLeft(0)
-    repsRef.current = 0
+    countRef.current = 0
   }, [])
 
-  const playOnce = useCallback((url) => {
-    return new Promise((resolve) => {
-      if (audioRef.current) {
-        audioRef.current.pause()
-      }
-      const a = new Audio(url)
-      audioRef.current = a
-      setPlaying(true)
-      a.onended = () => { setPlaying(false); resolve() }
-      a.onerror = () => { setPlaying(false); resolve() }
-      a.play().catch(() => { setPlaying(false); resolve() })
-    })
-  }, [])
-
-  const play = useCallback(async (url, times = 1) => {
-    stop()
-    urlRef.current = url
-    repsRef.current = times
+  const play = useCallback((text, times = 1) => {
+    if (!text || !window.speechSynthesis) return
+    activeRef.current = false
+    window.speechSynthesis.cancel()
+    activeRef.current = true
+    countRef.current  = 0
+    setPlaying(true)
     setRepsLeft(times)
 
-    for (let i = 0; i < times; i++) {
-      if (urlRef.current !== url) break  // stopped externally
-      setRepsLeft(times - i)
-      await playOnce(url)
-      if (i < times - 1) {
-        await new Promise(r => setTimeout(r, 600)) // pause between reps
+    const next = () => {
+      if (!activeRef.current || countRef.current >= times) {
+        setPlaying(false); setRepsLeft(0); return
       }
+      const utt  = new SpeechSynthesisUtterance(text)
+      utt.lang   = 'en-US'
+      utt.rate   = 0.85
+      utt.pitch  = 1.0
+      utt.volume = 1.0
+      utt.onend  = () => {
+        countRef.current++
+        setRepsLeft(times - countRef.current)
+        if (countRef.current < times && activeRef.current) {
+          setTimeout(next, 700)
+        } else {
+          setPlaying(false); setRepsLeft(0)
+        }
+      }
+      utt.onerror = () => { setPlaying(false); setRepsLeft(0) }
+      window.speechSynthesis.speak(utt)
     }
-    setRepsLeft(0)
-  }, [stop, playOnce])
+    next()
+  }, [])
 
   return { play, stop, playing, repsLeft }
 }

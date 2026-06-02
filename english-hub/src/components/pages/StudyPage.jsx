@@ -60,7 +60,7 @@ export default function StudyPage({ progress, toggleMastered, update }) {
   // Auto-play in Shadow mode
   useEffect(() => {
     if (mode === 'shadow' && current?.audio) {
-      play(current.audio, reps)
+      play(current.en, reps)
     }
   }, [idx, mode]) // eslint-disable-line
 
@@ -80,7 +80,7 @@ export default function StudyPage({ progress, toggleMastered, update }) {
   function reveal() {
     setRevealed(true)
     inc('practiced')
-    if (current?.audio) play(current.audio, reps)
+    if (current?.audio) play(current.en, reps)
   }
 
   function handleRating(r) {
@@ -207,7 +207,7 @@ export default function StudyPage({ progress, toggleMastered, update }) {
                   )}
 
                   {/* Replay button */}
-                  <button onClick={()=>current.audio&&play(current.audio,reps)}
+                  <button onClick={()=>current.audio&&play(current.en,reps)}
                     className="w-full border border-stone-200 text-stone-600 py-2 rounded-xl text-sm mb-4 hover:bg-stone-50">
                     🔁 Replay ×{reps}
                   </button>
@@ -252,7 +252,7 @@ export default function StudyPage({ progress, toggleMastered, update }) {
               </div>
 
               {/* Replay */}
-              <button onClick={()=>current.audio&&play(current.audio,reps)}
+              <button onClick={()=>current.audio&&play(current.en,reps)}
                 className="w-full border border-stone-200 text-stone-600 py-2.5 rounded-xl text-sm mb-3 hover:bg-stone-50">
                 🔁 Replay ×{reps}
               </button>

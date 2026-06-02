@@ -1,5 +1,6 @@
 import { useState, useMemo } from 'react'
 import { VERBS, VERB_SENTENCES } from '../../data/phrasalVerbs'
+import AudioPlayer from '../shared/AudioPlayer'
 
 function getVerbOfDay() {
   const dayNum = Math.floor(Math.abs(new Date() - new Date('2026-01-01')) / 86400000) % 100
