@@ -1,0 +1,51 @@
+const NAV = [
+  { id:'home',     icon:'🏠', label:'Dashboard'        },
+  { id:'study',    icon:'🎯', label:'Study Mode'       },
+  { id:'islands',  icon:'🏝️', label:'Island Sentences' },
+  { id:'phrasal',  icon:'💬', label:'Phrasal Verbs'    },
+  { id:'progress', icon:'📊', label:'Progress'          },
+  { id:'tracker',  icon:'📔', label:'Tracker'           },
+]
+
+export default function Sidebar({ page, setPage, streak, signOut }) {
+  return (
+    <aside className="w-52 flex-shrink-0 hidden md:flex flex-col py-6 px-3 h-screen sticky top-0"
+      style={{background:'var(--cream)',borderRight:'1px solid var(--line)'}}>
+      <div className="px-3 mb-6">
+        <div className="text-base font-bold" style={{color:'var(--deep)',fontFamily:'Georgia,serif'}}>📚 English Hub</div>
+        <div className="text-xs mt-0.5" style={{color:'var(--sub)'}}>softmark_2026</div>
+      </div>
+      <nav className="space-y-0.5 flex-1">
+        {NAV.map(n => (
+          <button key={n.id} onClick={() => setPage(n.id)}
+            className="w-full text-left px-3 py-2.5 rounded-xl text-sm transition-all flex items-center gap-2.5"
+            style={page===n.id
+              ? {background:'var(--deep)',color:'white',fontWeight:600}
+              : {color:'var(--sub)'}
+            }
+            onMouseEnter={e=>{ if(page!==n.id) e.currentTarget.style.background='var(--sage-l)' }}
+            onMouseLeave={e=>{ if(page!==n.id) e.currentTarget.style.background='' }}>
+            <span>{n.icon}</span>{n.label}
+          </button>
+        ))}
+      </nav>
+      <div className="mt-3 space-y-2">
+        <div className="rounded-2xl p-3" style={{background:'var(--terra-l)',border:'1px solid rgba(184,105,74,.15)'}}>
+          <div className="flex items-center gap-2">
+            <span className="text-xl">🔥</span>
+            <div>
+              <div className="text-xs font-bold" style={{color:'var(--terra)'}}>Day {streak} streak!</div>
+              <div className="text-xs" style={{color:'var(--sub)'}}>Keep going ✨</div>
+            </div>
+          </div>
+        </div>
+        <button onClick={signOut} className="w-full text-xs py-1 transition-colors"
+          style={{color:'var(--sub)'}}
+          onMouseEnter={e=>e.currentTarget.style.color='var(--warm)'}
+          onMouseLeave={e=>e.currentTarget.style.color='var(--sub)'}>
+          登出
+        </button>
+      </div>
+    </aside>
+  )
+}
