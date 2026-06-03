@@ -9,6 +9,7 @@ import HomePage         from './components/pages/HomePage'
 import StudyPage        from './components/pages/StudyPage'
 import IslandsPage      from './components/pages/IslandsPage'
 import PhrasalPage      from './components/pages/PhrasalPage'
+import VocabPage        from './components/pages/VocabPage'
 import SlangPage        from './components/pages/SlangPage'
 import ScenarioPage     from './components/pages/ScenarioPage'
 import ProgressPage     from './components/pages/ProgressPage'
@@ -51,6 +52,7 @@ export default function App() {
         {page==='study'    && <StudyPage     progress={progress} toggleMastered={toggleMastered}/>}
         {page==='islands'  && <IslandsPage   islandFilter={islandFilter} setIslandFilter={setIslandFilter} progress={progress} toggleMastered={toggleMastered}/>}
         {page==='phrasal'  && <PhrasalPage   progress={progress} toggleMastered={toggleMastered}/>}
+        {page==='vocab'    && <VocabPage     progress={progress} toggleMastered={toggleMastered}/>}
         {page==='slang'    && <SlangPage     progress={progress} toggleMastered={toggleMastered}/>}
         {page==='scenario' && <ScenarioPage  progress={progress} toggleMastered={toggleMastered}/>}
         {page==='progress' && <ProgressPage  progress={progress} masteredCount={masteredCount} stats={stats}/>}
