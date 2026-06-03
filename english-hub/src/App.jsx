@@ -9,6 +9,8 @@ import HomePage         from './components/pages/HomePage'
 import StudyPage        from './components/pages/StudyPage'
 import IslandsPage      from './components/pages/IslandsPage'
 import PhrasalPage      from './components/pages/PhrasalPage'
+import SlangPage        from './components/pages/SlangPage'
+import ScenarioPage     from './components/pages/ScenarioPage'
 import ProgressPage     from './components/pages/ProgressPage'
 import TrackerPage      from './components/pages/TrackerPage'
 
@@ -28,11 +30,10 @@ export default function App() {
   if (!user) return <Auth signIn={signIn} signUp={signUp} />
 
   return (
-    <div className="flex h-screen overflow-hidden" style={{background:'var(--cream)',fontFamily:"system-ui,-apple-system,sans-serif"}}>
+    <div className="flex h-screen overflow-hidden" style={{background:'var(--cream)'}}>
       <Sidebar page={page} setPage={setPage} streak={stats.streak} signOut={signOut} />
 
       <main className="flex-1 overflow-y-auto overflow-x-hidden pb-20 md:pb-0">
-        {/* Mobile header */}
         <div className="md:hidden sticky top-0 z-40 px-4 py-3 flex items-center justify-between"
           style={{background:'rgba(250,246,241,.92)',backdropFilter:'blur(16px)',borderBottom:'1px solid rgba(61,53,48,.08)'}}>
           <div className="flex items-center gap-2">
@@ -46,12 +47,14 @@ export default function App() {
           </div>
         </div>
 
-        {page === 'home'     && <HomePage     progress={progress} masteredCount={masteredCount} setPage={setPage} setIslandFilter={setIslandFilter} />}
-        {page === 'study'    && <StudyPage    progress={progress} toggleMastered={toggleMastered} />}
-        {page === 'islands'  && <IslandsPage  islandFilter={islandFilter} setIslandFilter={setIslandFilter} progress={progress} toggleMastered={toggleMastered} />}
-        {page === 'phrasal'  && <PhrasalPage  progress={progress} toggleMastered={toggleMastered} />}
-        {page === 'progress' && <ProgressPage progress={progress} masteredCount={masteredCount} stats={stats} />}
-        {page === 'tracker'  && <TrackerPage  stats={stats} logs={logs} addLog={addLog} studiedDates={studiedDates} />}
+        {page==='home'     && <HomePage      progress={progress} masteredCount={masteredCount} setPage={setPage} setIslandFilter={setIslandFilter}/>}
+        {page==='study'    && <StudyPage     progress={progress} toggleMastered={toggleMastered}/>}
+        {page==='islands'  && <IslandsPage   islandFilter={islandFilter} setIslandFilter={setIslandFilter} progress={progress} toggleMastered={toggleMastered}/>}
+        {page==='phrasal'  && <PhrasalPage   progress={progress} toggleMastered={toggleMastered}/>}
+        {page==='slang'    && <SlangPage     progress={progress} toggleMastered={toggleMastered}/>}
+        {page==='scenario' && <ScenarioPage  progress={progress} toggleMastered={toggleMastered}/>}
+        {page==='progress' && <ProgressPage  progress={progress} masteredCount={masteredCount} stats={stats}/>}
+        {page==='tracker'  && <TrackerPage   stats={stats} logs={logs} addLog={addLog} studiedDates={studiedDates}/>}
       </main>
 
       <MobileNav page={page} setPage={setPage} />

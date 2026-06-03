@@ -48,15 +48,12 @@ export default function HomePage({ progress, masteredCount, setPage, setIslandFi
 
   return (
     <div className="p-5 md:p-8 max-w-4xl mx-auto">
-
-      {/* Greeting */}
       <div className="mb-6">
         <p className="text-xs mb-1" style={{color:'var(--sub)'}}>{today}</p>
         <h1 className="text-3xl font-bold" style={{color:'var(--deep)',fontFamily:'Georgia,serif'}}>{greet}</h1>
         <p className="text-sm mt-1" style={{color:'var(--sub)'}}>你今天學了什麼？Keep building your English world 🌍</p>
       </div>
 
-      {/* Stats — Pinterest cards */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-7">
         {[
           {e:'📚', n:SENTENCES.length.toLocaleString(), l:'Total Sentences', bg:'var(--card-1)', c:'var(--sage)'},
@@ -73,16 +70,13 @@ export default function HomePage({ progress, masteredCount, setPage, setIslandFi
         ))}
       </div>
 
-      {/* Islands — masonry-style grid */}
       <div className="mb-7">
         <div className="flex items-center justify-between mb-3">
           <h2 className="text-lg font-bold" style={{color:'var(--deep)',fontFamily:'Georgia,serif'}}>🏝️ My Islands</h2>
-          <button onClick={()=>goIsland('all')} className="text-xs font-medium transition-colors"
+          <button onClick={()=>goIsland('all')} className="text-xs font-medium"
             style={{color:'var(--sage)'}}
             onMouseEnter={e=>e.currentTarget.style.color='var(--deep)'}
-            onMouseLeave={e=>e.currentTarget.style.color='var(--sage)'}>
-            全部 →
-          </button>
+            onMouseLeave={e=>e.currentTarget.style.color='var(--sage)'}>全部 →</button>
         </div>
         <div className="grid grid-cols-3 md:grid-cols-4 gap-2">
           {ISLAND_NAMES.map(name => {
@@ -102,7 +96,6 @@ export default function HomePage({ progress, masteredCount, setPage, setIslandFi
         </div>
       </div>
 
-      {/* Verb of the day */}
       {verb && (
         <div className="rounded-2xl p-5 text-white" style={{background:'var(--deep)'}}>
           <p className="text-xs font-bold tracking-wider mb-2" style={{color:'rgba(232,237,233,.7)'}}>
@@ -116,7 +109,7 @@ export default function HomePage({ progress, masteredCount, setPage, setIslandFi
             "{verb.memory.slice(0,90)}..."
           </p>
           <button onClick={()=>setPage('phrasal')}
-            className="flex items-center gap-2 text-xs px-4 py-2 rounded-full transition-colors"
+            className="flex items-center gap-2 text-xs px-4 py-2 rounded-full"
             style={{background:'rgba(255,255,255,.12)',color:'white'}}
             onMouseEnter={e=>e.currentTarget.style.background='rgba(255,255,255,.2)'}
             onMouseLeave={e=>e.currentTarget.style.background='rgba(255,255,255,.12)'}>
