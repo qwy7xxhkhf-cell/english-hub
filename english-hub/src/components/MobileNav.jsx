@@ -2,7 +2,7 @@ const NAV = [
   { id:'home',     icon:'🏠', label:'Home'    },
   { id:'study',    icon:'🎯', label:'Study'   },
   { id:'vocab',    icon:'📚', label:'Vocab'   },
-  { id:'slang',    icon:'🔥', label:'熱詞'    },
+  { id:'slang',    icon:'🔥', label:'Slang'   },
   { id:'scenario', icon:'🎭', label:'Scene'   },
 ]
 

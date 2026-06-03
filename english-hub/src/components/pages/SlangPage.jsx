@@ -197,7 +197,6 @@ export default function SlangPage({ progress, toggleMastered }) {
             <div className="flex items-center justify-between">
               <div>
                 <span className="font-bold text-base" style={{fontFamily:'Georgia,serif'}}>{w.zh}</span>
-                <span className="text-xs ml-2" style={{color:active?.zh===w.zh&&showDetail?'rgba(255,255,255,.6)':'var(--sub)'}}>{w.pinyin}</span>
               </div>
               <span style={{color:active?.zh===w.zh&&showDetail?'rgba(255,255,255,.4)':'var(--sub)'}}>›</span>
             </div>
@@ -224,7 +223,7 @@ export default function SlangPage({ progress, toggleMastered }) {
             <h1 className="text-4xl font-bold mb-1" style={{color:'var(--deep)',fontFamily:'Georgia,serif'}}>{active.zh}</h1>
             <div className="flex items-center gap-2 flex-wrap mb-2">
               <span className="text-sm px-3 py-1 rounded-full" style={{background:'var(--terra-l)',color:'var(--terra)',fontWeight:600}}>{active.en}</span>
-              <span className="text-sm" style={{color:'var(--sub)'}}>{active.pinyin}</span>
+              
             </div>
           </div>
 

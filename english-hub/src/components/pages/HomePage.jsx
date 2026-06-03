@@ -1,5 +1,7 @@
 import { VERBS } from '../../data/phrasalVerbs'
 import { ISLAND_NAMES, SENTENCES } from '../../data/islands'
+import { SLANG } from '../../data/internetSlang'
+import { VOCABULARY } from '../../data/vocabulary'
 
 const ISLAND_META = {
   'Beauty & Self-care Island':  { emoji:'💄', bg:'var(--card-5)', accent:'#a05050' },
@@ -56,10 +58,10 @@ export default function HomePage({ progress, masteredCount, setPage, setIslandFi
 
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-7">
         {[
-          {e:'📚', n:SENTENCES.length.toLocaleString(), l:'Total Sentences', bg:'var(--card-1)', c:'var(--sage)'},
+          {e:'📚', n:(SENTENCES.length+VERBS.reduce((a,v)=>a+v.sentences.length,0)+SLANG.reduce((a,w)=>a+w.sentences.length,0)+VOCABULARY.reduce((a,v)=>a+v.sentences.length,0)).toLocaleString(), l:'Total Sentences', bg:'var(--card-1)', c:'var(--sage)'},
           {e:'✅', n:masteredCount,                     l:'Mastered',        bg:'var(--card-2)', c:'var(--terra)'},
           {e:'🏝️', n:ISLAND_NAMES.length,               l:'Islands',         bg:'var(--card-3)', c:'#6b5f8a'},
-          {e:'💬', n:'100',                             l:'Phrasal Verbs',   bg:'var(--card-4)', c:'#7a6a50'},
+          {e:'💬', n:VERBS.length,                       l:'Phrasal Verbs',   bg:'var(--card-4)', c:'#7a6a50'},
         ].map(s=>(
           <div key={s.l} className="rounded-2xl p-4 text-center transition-all hover:shadow-md"
             style={{background:s.bg,border:'1px solid rgba(61,53,48,.06)'}}>

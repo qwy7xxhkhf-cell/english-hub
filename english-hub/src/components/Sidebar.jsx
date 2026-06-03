@@ -4,7 +4,7 @@ const NAV = [
   { id:'islands',  icon:'🏝️', label:'Island Sentences' },
   { id:'phrasal',  icon:'💬', label:'Phrasal Verbs'    },
   { id:'vocab',    icon:'📚', label:'Vocabulary'       },
-  { id:'slang',    icon:'🔥', label:'熱詞英文化'        },
+  { id:'slang',    icon:'🔥', label:'Slang Dictionary' },
   { id:'scenario', icon:'🎭', label:'Scenario Practice'},
   { id:'progress', icon:'📊', label:'Progress'         },
   { id:'tracker',  icon:'📔', label:'Tracker'          },
@@ -39,7 +39,7 @@ export default function Sidebar({ page, setPage, streak, signOut }) {
             </div>
           </div>
         </div>
-        <button onClick={signOut} className="w-full text-xs py-1" style={{color:'var(--sub)'}}>登出</button>
+        <button onClick={signOut} className="w-full text-xs py-1" style={{color:'var(--sub)'}}>Sign Out</button>
       </div>
     </aside>
   )
