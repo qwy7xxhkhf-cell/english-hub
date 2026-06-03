@@ -76,7 +76,7 @@ const SCENARIOS = [
       {situation:'找話題',en:'How do you know the host? I just moved here recently and I am still meeting people.',zh:'你怎麼認識主辦人的？我最近才搬來這裡，還在認識新朋友。'},
       {situation:'交換資訊',en:'I would love to keep in touch. Could I add you on Instagram?',zh:'我很想保持聯繫，我可以加你的 Instagram 嗎？'},
       {situation:'邀請出去',en:'A few of us are heading to a bar nearby after this — you should come!',zh:'我們幾個人之後要去附近的酒吧——你應該一起來！'},
-      {situation:'共同點',en:'Oh, you are into photography too? We should go on a photo walk sometime.',zh:'哦，你也喜歡攝影？我們應該找時間一起去街拍。"},
+      {situation:'共同點',en:'Oh, you are into photography too? We should go on a photo walk sometime.',zh:'哦，你也喜歡攝影？我們應該找時間一起去街拍。'},
       {situation:'結束對話',en:'It was so nice meeting you. Let's definitely grab coffee soon.',zh:'很高興認識你，我們一定要找時間喝咖啡。'},
       {situation:'重新聯繫',en:'Hey! We met at Sarah's party last month. How have you been?',zh:'嘿！我們上個月在 Sarah 的派對見過，你最近怎樣？'},
       {situation:'提議活動',en:'Have you tried that new climbing gym? A few of us are going Saturday — want to join?',zh:'你試過那家新的攀岩館嗎？我們幾個人星期六要去——想一起嗎？'},
