@@ -1,5 +1,5 @@
 import { SENTENCES, ISLAND_NAMES } from '../../data/islands'
-import { VERBS } from '../../data/phrasalVerbs'
+import { VERBS, VERB_SENTENCES } from '../../data/phrasalVerbs'
 import { SLANG } from '../../data/internetSlang'
 import { VOCABULARY } from '../../data/vocabulary'
 
@@ -9,21 +9,21 @@ const LEVEL_TEXT  = { A1:'#065f46', A2:'#1e40af', B1:'#92400e', B2:'#9d174d' }
 export default function ProgressPage({ progress, masteredCount, stats }) {
   // Grand total across all content
   const totalIsland   = SENTENCES.length
-  const totalPhrsal   = VERBS.reduce((a,v)=>a+v.sentences.length, 0)
+  const totalPhrsal   = VERB_SENTENCES.length
   const totalSlang    = SLANG.reduce((a,w)=>a+w.sentences.length, 0)
   const totalVocab    = VOCABULARY.reduce((a,v)=>a+v.sentences.length, 0)
   const grandTotal    = totalIsland + totalPhrsal + totalSlang + totalVocab
 
   // Mastered per category
-  const masteredPhrsal  = VERBS.reduce((a,v,vi)=>a+v.sentences.filter((_,si)=>progress[`verb_${vi}_${si}`]?.mastered).length,0)
+  const masteredPhrsal  = VERB_SENTENCES.filter(s=>progress[`v_${s.verb.replace(/\s+/g,'_')}_${s.num}`]?.mastered).length
   const masteredSlang   = SLANG.reduce((a,w,wi)=>a+w.sentences.filter((_,si)=>progress[`slang_${w.zh}_${si}`]?.mastered).length,0)
   const masteredVocab   = VOCABULARY.reduce((a,v,vi)=>a+v.sentences.filter((_,si)=>progress[`vocab_${v.word}_${si}`]?.mastered).length,0)
-  const masteredIsland  = masteredCount - masteredPhrsal - masteredSlang - masteredVocab
+  const masteredIsland  = SENTENCES.filter(s=>progress[`s_${s.id}`]?.mastered).length
 
   // Island breakdown
   const islandProgress = ISLAND_NAMES.map(name => {
     const total   = SENTENCES.filter(s=>s.island===name).length
-    const mastered = SENTENCES.filter((s,i)=>s.island===name&&progress[`sentence_${i}`]?.mastered).length
+    const mastered = SENTENCES.filter(s=>s.island===name&&progress[`s_${s.id}`]?.mastered).length
     return { name, total, mastered, pct: total>0?Math.round(mastered/total*100):0 }
   })
 

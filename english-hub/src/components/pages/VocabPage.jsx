@@ -174,6 +174,7 @@ export default function VocabPage({ progress, toggleMastered }) {
   const [active,      setActive]      = useState(null)
   const [showDetail,  setShowDetail]  = useState(false)
   const [studying,    setStudying]    = useState(false)
+  const { play } = useAudio()
 
   const filtered = useMemo(()=>{
     let list = VOCABULARY
@@ -382,8 +383,6 @@ export default function VocabPage({ progress, toggleMastered }) {
     </div>
   )
 
-  // Need play function here too
-  const { play } = useAudio()
 
   return (
     <>
