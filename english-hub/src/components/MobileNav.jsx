@@ -4,6 +4,7 @@ const NAV = [
   { id:'vocab',    icon:'📚', label:'Vocab'   },
   { id:'slang',    icon:'🔥', label:'Slang'   },
   { id:'scenario', icon:'🎭', label:'Scene'   },
+  { id:'tracker',  icon:'📔', label:'Track'   },
 ]
 
 export default function MobileNav({ page, setPage }) {
@@ -18,8 +19,8 @@ export default function MobileNav({ page, setPage }) {
             <div className="absolute top-0 left-1/2 -translate-x-1/2 w-5 h-0.5 rounded-full"
               style={{background:'var(--terra)'}}/>
           )}
-          <span className={`text-xl ${page===n.id?'scale-110':''} transition-transform`}>{n.icon}</span>
-          <span className="text-xs font-medium"
+          <span className={`text-lg ${page===n.id?'scale-110':''} transition-transform`}>{n.icon}</span>
+          <span className="text-[10px] font-medium"
             style={{color:page===n.id?'var(--terra)':'var(--sub)'}}>{n.label}</span>
         </button>
       ))}

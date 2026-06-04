@@ -223,13 +223,13 @@ export default function VocabPage({ progress, toggleMastered }) {
 
       {/* Word list */}
       <div className="flex-1 overflow-y-auto p-2 space-y-1">
-        {filtered.map(v=>{
+        {filtered.map((v,vIdx)=>{
           const lv  = LEVEL_STYLE[v.level]
           const pos = POS_STYLE[v.pos?.split('/')[0].trim()] || POS_STYLE['noun']
           const mc  = totalMastered(v)
           const isActive = active?.word===v.word&&showDetail
           return (
-            <button key={v.word} onClick={()=>select(v)}
+            <button key={`${v.word}-${v.level}-${vIdx}`} onClick={()=>select(v)}
               className="w-full text-left px-3 py-3 rounded-xl transition-all"
               style={isActive?{background:'var(--deep)',color:'white'}:{}}
               onMouseEnter={e=>{ if(!isActive) e.currentTarget.style.background='var(--sage-l)' }}
