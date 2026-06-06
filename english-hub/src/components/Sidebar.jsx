@@ -3,6 +3,7 @@ const NAV = [
   { id:'study',    icon:'🎯', label:'Study Mode'       },
   { id:'islands',  icon:'🏝️', label:'Island Sentences' },
   { id:'phrasal',  icon:'💬', label:'Phrasal Verbs'    },
+  { id:'chunks',   icon:'🧩', label:'Chunks & Collocations' },
   { id:'vocab',    icon:'📚', label:'Vocabulary'       },
   { id:'slang',    icon:'🔥', label:'Slang Dictionary' },
   { id:'scenario', icon:'🎭', label:'Scenario Practice'},
