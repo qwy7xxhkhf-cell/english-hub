@@ -73,6 +73,25 @@ export default function HomePage({ progress, masteredCount, setPage, setIslandFi
         ))}
       </div>
 
+      {/* Quick access chips */}
+      <div className="mb-7">
+        <p className="text-xs font-semibold mb-2" style={{color:'var(--sub)'}}>快速入口</p>
+        <div className="flex gap-2 overflow-x-auto pb-1 -mx-1 px-1">
+          {[
+            {icon:'💬', label:'Phrasal Verbs', to:'phrasal'},
+            {icon:'🧩', label:'Chunks',        to:'chunks'},
+            {icon:'🏝️', label:'Islands',       to:'islands'},
+            {icon:'📊', label:'Progress',      to:'progress'},
+          ].map(ch=>(
+            <button key={ch.to} onClick={()=>setPage(ch.to)}
+              className="flex-shrink-0 flex items-center gap-1.5 rounded-full px-4 py-2 text-sm font-medium transition-all hover:shadow-sm active:scale-95"
+              style={{background:'white',border:'1px solid rgba(61,53,48,.08)',color:'var(--deep)'}}>
+              <span className="text-base">{ch.icon}</span>{ch.label}
+            </button>
+          ))}
+        </div>
+      </div>
+
       <div className="mb-7">
         <div className="flex items-center justify-between mb-3">
           <h2 className="text-lg font-bold" style={{color:'var(--deep)',fontFamily:'Georgia,serif'}}>🏝️ My Islands</h2>
