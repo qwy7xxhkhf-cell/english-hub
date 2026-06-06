@@ -58,17 +58,18 @@ export default function HomePage({ progress, masteredCount, setPage, setIslandFi
 
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-7">
         {[
-          {e:'📚', n:(SENTENCES.length+VERB_SENTENCES.length+SLANG.reduce((a,w)=>a+w.sentences.length,0)+VOCABULARY.reduce((a,v)=>a+v.sentences.length,0)).toLocaleString(), l:'Total Sentences', bg:'var(--card-1)', c:'var(--sage)'},
-          {e:'✅', n:masteredCount,                     l:'Mastered',        bg:'var(--card-2)', c:'var(--terra)'},
-          {e:'🏝️', n:ISLAND_NAMES.length,               l:'Islands',         bg:'var(--card-3)', c:'#6b5f8a'},
-          {e:'💬', n:VERBS.length,                       l:'Phrasal Verbs',   bg:'var(--card-4)', c:'#7a6a50'},
+          {e:'📚', n:(SENTENCES.length+VERB_SENTENCES.length+SLANG.reduce((a,w)=>a+w.sentences.length,0)+VOCABULARY.reduce((a,v)=>a+v.sentences.length,0)).toLocaleString(), l:'Total Sentences', bg:'var(--card-1)', c:'var(--sage)', to:'progress'},
+          {e:'✅', n:masteredCount,                     l:'Mastered',        bg:'var(--card-2)', c:'var(--terra)', to:'progress'},
+          {e:'🏝️', n:ISLAND_NAMES.length,               l:'Islands',         bg:'var(--card-3)', c:'#6b5f8a', to:'islands'},
+          {e:'💬', n:VERBS.length,                       l:'Phrasal Verbs',   bg:'var(--card-4)', c:'#7a6a50', to:'phrasal'},
         ].map(s=>(
-          <div key={s.l} className="rounded-2xl p-4 text-center transition-all hover:shadow-md"
+          <button key={s.l} onClick={()=>s.to&&setPage(s.to)}
+            className="rounded-2xl p-4 text-center transition-all hover:shadow-md active:scale-95"
             style={{background:s.bg,border:'1px solid rgba(61,53,48,.06)'}}>
             <div className="text-2xl mb-1">{s.e}</div>
             <div className="text-xl font-bold" style={{color:s.c,fontFamily:'Georgia,serif'}}>{s.n}</div>
             <div className="text-xs mt-0.5" style={{color:'var(--sub)'}}>{s.l}</div>
-          </div>
+          </button>
         ))}
       </div>
 
