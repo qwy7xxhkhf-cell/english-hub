@@ -1,6 +1,6 @@
 import { BUY_URL } from '../license'
 
-export function SettingsModal({ open, onClose, user, activated, onActivate, onDeactivate, onSignOut }) {
+export function SettingsModal({ open, onClose, user, activated, onActivate, onSignOut }) {
   if (!open) return null
 
   const Row = ({ children }) => (
@@ -40,10 +40,9 @@ export function SettingsModal({ open, onClose, user, activated, onActivate, onDe
             {activated ? '重新輸入啟用碼' : '輸入啟用碼'}
           </button>
           {activated && (
-            <button onClick={onDeactivate}
-              className="w-full text-xs mt-2 py-1" style={{ color:'var(--sub)' }}>
-              在此裝置移除啟用（換機時用）
-            </button>
+            <div className="text-xs mt-2 text-center" style={{ color:'var(--sub)' }}>
+              已綁定你嘅帳戶，任何裝置登入都會自動解鎖
+            </div>
           )}
           {!activated && (
             <a href={BUY_URL} target="_blank" rel="noopener noreferrer"

@@ -15,17 +15,18 @@ import SlangPage        from './components/pages/SlangPage'
 import ScenarioPage     from './components/pages/ScenarioPage'
 import ProgressPage     from './components/pages/ProgressPage'
 import TrackerPage      from './components/pages/TrackerPage'
-import { PREMIUM_PAGES, isActivated, deactivate } from './license'
-import { ActivationModal, Paywall }   from './components/Activation'
-import { SettingsModal }               from './components/Settings'
+import { PREMIUM_PAGES }            from './license'
+import { useEntitlement }           from './hooks/useEntitlement'
+import { ActivationModal, Paywall } from './components/Activation'
+import { SettingsModal }            from './components/Settings'
 
 export default function App() {
   const { user, loading, signIn, signUp, signOut } = useAuth()
   const { progress, toggleMastered, masteredCount } = useProgress(user?.id)
   const { logs, stats, addLog, studiedDates }        = useStudyLog(user?.id)
+  const { premium: activated, refresh: refreshEntitlement } = useEntitlement(user?.id)
   const [page,         setPage]         = useState('home')
   const [islandFilter, setIslandFilter] = useState('all')
-  const [activated,    setActivated]    = useState(isActivated())
   const [showActivate, setShowActivate] = useState(false)
   const [showSettings, setShowSettings] = useState(false)
   const locked = PREMIUM_PAGES.includes(page) && !activated
@@ -91,7 +92,7 @@ export default function App() {
       <ActivationModal
         open={showActivate}
         onClose={()=>setShowActivate(false)}
-        onActivated={()=>setActivated(true)}
+        onActivated={()=>refreshEntitlement()}
       />
 
       <SettingsModal
@@ -100,7 +101,6 @@ export default function App() {
         user={user}
         activated={activated}
         onActivate={()=>setShowActivate(true)}
-        onDeactivate={()=>{ if(confirm('確定喺呢個裝置移除啟用？之後要再輸入啟用碼先解鎖。')){ deactivate(); setActivated(false); setShowSettings(false) } }}
         onSignOut={signOut}
       />
     </div>
