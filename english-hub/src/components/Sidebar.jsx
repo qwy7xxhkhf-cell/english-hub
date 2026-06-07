@@ -13,7 +13,7 @@ const NAV = [
   { id:'tracker',  icon:'📔', label:'Tracker'          },
 ]
 
-export default function Sidebar({ page, setPage, streak, signOut, activated, onActivate }) {
+export default function Sidebar({ page, setPage, streak, signOut, activated, onActivate, onSettings }) {
   return (
     <aside className="w-52 flex-shrink-0 hidden md:flex flex-col py-5 px-3 h-screen sticky top-0 overflow-y-auto"
       style={{background:'var(--cream)',borderRight:'1px solid var(--line)'}}>
@@ -66,7 +66,10 @@ export default function Sidebar({ page, setPage, streak, signOut, activated, onA
             </div>
           </div>
         </div>
-        <button onClick={signOut} className="w-full text-xs py-1" style={{color:'var(--sub)'}}>Sign Out</button>
+        <button onClick={onSettings} className="w-full text-xs py-1.5 flex items-center justify-center gap-1.5"
+          style={{color:'var(--sub)'}}>
+          <span>⚙️</span> 設定
+        </button>
       </div>
     </aside>
   )

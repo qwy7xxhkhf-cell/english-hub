@@ -15,8 +15,9 @@ import SlangPage        from './components/pages/SlangPage'
 import ScenarioPage     from './components/pages/ScenarioPage'
 import ProgressPage     from './components/pages/ProgressPage'
 import TrackerPage      from './components/pages/TrackerPage'
-import { PREMIUM_PAGES, isActivated } from './license'
+import { PREMIUM_PAGES, isActivated, deactivate } from './license'
 import { ActivationModal, Paywall }   from './components/Activation'
+import { SettingsModal }               from './components/Settings'
 
 export default function App() {
   const { user, loading, signIn, signUp, signOut } = useAuth()
@@ -26,6 +27,7 @@ export default function App() {
   const [islandFilter, setIslandFilter] = useState('all')
   const [activated,    setActivated]    = useState(isActivated())
   const [showActivate, setShowActivate] = useState(false)
+  const [showSettings, setShowSettings] = useState(false)
   const locked = PREMIUM_PAGES.includes(page) && !activated
   const premiumTitle = { study:'Study Mode', phrasal:'Phrasal Verbs', chunks:'Chunks & Collocations',
     slang:'Slang Dictionary', islands:'Island Sentences', progress:'Progress' }
@@ -41,7 +43,7 @@ export default function App() {
   return (
     <div className="flex h-screen overflow-hidden" style={{background:'var(--cream)'}}>
       <Sidebar page={page} setPage={setPage} streak={stats.streak} signOut={signOut}
-        activated={activated} onActivate={()=>setShowActivate(true)} />
+        activated={activated} onActivate={()=>setShowActivate(true)} onSettings={()=>setShowSettings(true)} />
 
       <main className="flex-1 overflow-y-auto overflow-x-hidden pb-20 md:pb-0">
         <div className="md:hidden sticky top-0 z-40 px-4 py-3 flex items-center justify-between"
@@ -51,13 +53,13 @@ export default function App() {
             <span className="font-bold text-sm" style={{color:'var(--deep)',fontFamily:'Georgia,serif'}}>English Hub</span>
           </div>
           <div className="flex items-center gap-2">
-            <button onClick={()=>setShowActivate(true)}
+            <button onClick={()=>setShowSettings(true)}
               className="flex items-center gap-1 px-2.5 py-1 rounded-full"
               style={{background:activated?'rgba(90,122,114,.12)':'rgba(184,105,74,.1)',
                 border:`1px solid ${activated?'rgba(90,122,114,.25)':'rgba(184,105,74,.2)'}`}}>
-              <span className="text-xs">{activated?'✅':'🔑'}</span>
+              <span className="text-xs">⚙️</span>
               <span className="text-[10px] font-bold" style={{color:activated?'var(--sage)':'var(--terra)'}}>
-                {activated?'已啟用':'啟用'}
+                {activated?'已啟用':'設定'}
               </span>
             </button>
             <div className="flex items-center gap-1.5 px-3 py-1 rounded-full"
@@ -90,6 +92,16 @@ export default function App() {
         open={showActivate}
         onClose={()=>setShowActivate(false)}
         onActivated={()=>setActivated(true)}
+      />
+
+      <SettingsModal
+        open={showSettings}
+        onClose={()=>setShowSettings(false)}
+        user={user}
+        activated={activated}
+        onActivate={()=>setShowActivate(true)}
+        onDeactivate={()=>{ if(confirm('確定喺呢個裝置移除啟用？之後要再輸入啟用碼先解鎖。')){ deactivate(); setActivated(false); setShowSettings(false) } }}
+        onSignOut={signOut}
       />
     </div>
   )
