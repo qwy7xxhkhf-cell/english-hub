@@ -27,7 +27,7 @@ export default function App() {
   const [activated,    setActivated]    = useState(isActivated())
   const [showActivate, setShowActivate] = useState(false)
   const locked = PREMIUM_PAGES.includes(page) && !activated
-  const premiumTitle = { phrasal:'Phrasal Verbs', chunks:'Chunks & Collocations',
+  const premiumTitle = { study:'Study Mode', phrasal:'Phrasal Verbs', chunks:'Chunks & Collocations',
     slang:'Slang Dictionary', islands:'Island Sentences', progress:'Progress' }
 
   if (loading) return (

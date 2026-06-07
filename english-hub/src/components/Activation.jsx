@@ -78,7 +78,7 @@ export function Paywall({ title, onUnlock }) {
         {title}
       </h2>
       <p className="text-sm leading-relaxed mb-6" style={{ color: 'var(--sub)' }}>
-        呢個係付費內容。輸入啟用碼即可<strong>永久解鎖</strong> Phrasal Verbs、Chunks、Island Sentences、Slang 同 Progress 等全部進階功能。
+        呢個係付費內容。輸入啟用碼即可<strong>永久解鎖</strong> Study Mode、Phrasal Verbs、Chunks、Island Sentences、Slang 同 Progress 等全部進階功能。
       </p>
       <button onClick={onUnlock}
         className="w-full max-w-xs rounded-xl py-3 text-sm font-bold transition-all active:scale-95 mb-3"
@@ -91,7 +91,7 @@ export function Paywall({ title, onUnlock }) {
         🛒 購買啟用碼
       </a>
       <p className="text-xs mt-5" style={{ color: 'var(--sub)' }}>
-        免費版可使用：Home · Study · Vocabulary · Scenario · Tracker
+        免費版可使用：Home · Vocabulary · Scenario · Tracker
       </p>
     </div>
   )

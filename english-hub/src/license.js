@@ -6,7 +6,7 @@
 // ── 1) 邊啲頁面要付費（premium）──────────────────────────────
 //    冇啟用碼嘅用戶，入呢啲頁會見到 Paywall。
 //    想免費就由呢度刪走；想加鎖就加返。
-export const PREMIUM_PAGES = ['phrasal', 'chunks', 'slang', 'islands', 'progress']
+export const PREMIUM_PAGES = ['study', 'phrasal', 'chunks', 'slang', 'islands', 'progress']
 
 // ── 2) 買啟用碼嘅連結（你嘅 Ko-fi / Etsy listing）──────────────
 export const BUY_URL = 'https://ko-fi.com/softmark2026'   // ← 改成你嘅真實連結
