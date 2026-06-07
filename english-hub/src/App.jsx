@@ -15,6 +15,8 @@ import SlangPage        from './components/pages/SlangPage'
 import ScenarioPage     from './components/pages/ScenarioPage'
 import ProgressPage     from './components/pages/ProgressPage'
 import TrackerPage      from './components/pages/TrackerPage'
+import { PREMIUM_PAGES, isActivated } from './license'
+import { ActivationModal, Paywall }   from './components/Activation'
 
 export default function App() {
   const { user, loading, signIn, signUp, signOut } = useAuth()
@@ -22,6 +24,11 @@ export default function App() {
   const { logs, stats, addLog, studiedDates }        = useStudyLog(user?.id)
   const [page,         setPage]         = useState('home')
   const [islandFilter, setIslandFilter] = useState('all')
+  const [activated,    setActivated]    = useState(isActivated())
+  const [showActivate, setShowActivate] = useState(false)
+  const locked = PREMIUM_PAGES.includes(page) && !activated
+  const premiumTitle = { phrasal:'Phrasal Verbs', chunks:'Chunks & Collocations',
+    slang:'Slang Dictionary', islands:'Island Sentences', progress:'Progress' }
 
   if (loading) return (
     <div className="min-h-screen flex items-center justify-center" style={{background:'var(--cream)'}}>
@@ -33,7 +40,8 @@ export default function App() {
 
   return (
     <div className="flex h-screen overflow-hidden" style={{background:'var(--cream)'}}>
-      <Sidebar page={page} setPage={setPage} streak={stats.streak} signOut={signOut} />
+      <Sidebar page={page} setPage={setPage} streak={stats.streak} signOut={signOut}
+        activated={activated} onActivate={()=>setShowActivate(true)} />
 
       <main className="flex-1 overflow-y-auto overflow-x-hidden pb-20 md:pb-0">
         <div className="md:hidden sticky top-0 z-40 px-4 py-3 flex items-center justify-between"
@@ -42,13 +50,27 @@ export default function App() {
             <span className="text-xl">📚</span>
             <span className="font-bold text-sm" style={{color:'var(--deep)',fontFamily:'Georgia,serif'}}>English Hub</span>
           </div>
-          <div className="flex items-center gap-1.5 px-3 py-1 rounded-full"
-            style={{background:'var(--terra-l)',border:'1px solid rgba(184,105,74,.2)'}}>
-            <span className="text-sm">🔥</span>
-            <span className="text-xs font-bold" style={{color:'var(--terra)'}}>Day {stats.streak}</span>
+          <div className="flex items-center gap-2">
+            <button onClick={()=>setShowActivate(true)}
+              className="flex items-center gap-1 px-2.5 py-1 rounded-full"
+              style={{background:activated?'rgba(90,122,114,.12)':'rgba(184,105,74,.1)',
+                border:`1px solid ${activated?'rgba(90,122,114,.25)':'rgba(184,105,74,.2)'}`}}>
+              <span className="text-xs">{activated?'✅':'🔑'}</span>
+              <span className="text-[10px] font-bold" style={{color:activated?'var(--sage)':'var(--terra)'}}>
+                {activated?'已啟用':'啟用'}
+              </span>
+            </button>
+            <div className="flex items-center gap-1.5 px-3 py-1 rounded-full"
+              style={{background:'var(--terra-l)',border:'1px solid rgba(184,105,74,.2)'}}>
+              <span className="text-sm">🔥</span>
+              <span className="text-xs font-bold" style={{color:'var(--terra)'}}>Day {stats.streak}</span>
+            </div>
           </div>
         </div>
 
+        {locked ? (
+          <Paywall title={premiumTitle[page] || '進階內容'} onUnlock={()=>setShowActivate(true)} />
+        ) : (<>
         {page==='home'     && <HomePage      progress={progress} masteredCount={masteredCount} setPage={setPage} setIslandFilter={setIslandFilter}/>}
         {page==='study'    && <StudyPage     progress={progress} toggleMastered={toggleMastered}/>}
         {page==='islands'  && <IslandsPage   islandFilter={islandFilter} setIslandFilter={setIslandFilter} progress={progress} toggleMastered={toggleMastered}/>}
@@ -59,9 +81,16 @@ export default function App() {
         {page==='scenario' && <ScenarioPage  progress={progress} toggleMastered={toggleMastered}/>}
         {page==='progress' && <ProgressPage  progress={progress} masteredCount={masteredCount} stats={stats}/>}
         {page==='tracker'  && <TrackerPage   stats={stats} logs={logs} addLog={addLog} studiedDates={studiedDates}/>}
+        </>)}
       </main>
 
       <MobileNav page={page} setPage={setPage} />
+
+      <ActivationModal
+        open={showActivate}
+        onClose={()=>setShowActivate(false)}
+        onActivated={()=>setActivated(true)}
+      />
     </div>
   )
 }
