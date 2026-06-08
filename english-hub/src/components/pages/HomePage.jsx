@@ -1,4 +1,5 @@
 import { VERBS, VERB_SENTENCES } from '../../data/phrasalVerbs'
+import { CHUNK_SENTENCES } from '../../data/chunks'
 import { ISLAND_NAMES, SENTENCES } from '../../data/islands'
 import { SLANG } from '../../data/internetSlang'
 import { VOCABULARY } from '../../data/vocabulary'
@@ -58,7 +59,7 @@ export default function HomePage({ progress, masteredCount, setPage, setIslandFi
 
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-7">
         {[
-          {e:'📚', n:(SENTENCES.length+VERB_SENTENCES.length+SLANG.reduce((a,w)=>a+w.sentences.length,0)+VOCABULARY.reduce((a,v)=>a+v.sentences.length,0)).toLocaleString(), l:'Total Sentences', bg:'var(--card-1)', c:'var(--sage)', to:'progress'},
+          {e:'📚', n:(SENTENCES.length+VERB_SENTENCES.length+CHUNK_SENTENCES.length+SLANG.reduce((a,w)=>a+w.sentences.length,0)+VOCABULARY.reduce((a,v)=>a+v.sentences.length,0)).toLocaleString(), l:'Total Sentences', bg:'var(--card-1)', c:'var(--sage)', to:'progress'},
           {e:'✅', n:masteredCount,                     l:'Mastered',        bg:'var(--card-2)', c:'var(--terra)', to:'progress'},
           {e:'🏝️', n:ISLAND_NAMES.length,               l:'Islands',         bg:'var(--card-3)', c:'#6b5f8a', to:'islands'},
           {e:'💬', n:VERBS.length,                       l:'Phrasal Verbs',   bg:'var(--card-4)', c:'#7a6a50', to:'phrasal'},
