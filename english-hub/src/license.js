@@ -11,7 +11,7 @@ import { supabase } from './lib/supabase'
 export const PREMIUM_PAGES = ['study', 'phrasal', 'chunks', 'slang', 'islands', 'progress']
 
 // ── 買啟用碼嘅連結（你嘅 Ko-fi / Etsy listing）──────────────
-export const BUY_URL = 'https://ko-fi.com/softmark2026'   // ← 改成你嘅真實連結
+export const BUY_URL = 'https://ko-fi.com/mindtheenglish'   // ← 改成你嘅真實連結
 
 // ── 驗證 + 啟用：call Supabase 嘅 redeem_code() ──────────────
 //    回傳 { ok: boolean, message: string }
