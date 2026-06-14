@@ -1,28 +1,27 @@
 import { useState, useRef, useCallback } from 'react'
 
-// Pick the best available English voice
+// iOS only lets speechSynthesis run after it's been "unlocked" inside a real
+// user gesture. We prime it once on the first tap.
+let _unlocked = false
+
+// Warm up the voice list (iOS/Chrome load voices async)
+if (typeof window !== 'undefined' && window.speechSynthesis) {
+  try {
+    window.speechSynthesis.getVoices()
+    window.speechSynthesis.onvoiceschanged = () => window.speechSynthesis.getVoices()
+  } catch {}
+}
+
 function getBestVoice() {
   const voices = window.speechSynthesis?.getVoices() || []
   if (!voices.length) return null
-
-  // Preferred voices (most natural sounding)
-  const preferred = [
-    'Samantha',        // iOS - natural US female
-    'Daniel',          // iOS - natural UK male
-    'Karen',           // iOS - Australian
-    'Google US English', // Chrome - good quality
-    'Microsoft Aria',  // Edge - very natural
-    'Microsoft Jenny', // Edge
-    'Alex',            // macOS
-  ]
+  const preferred = ['Samantha','Daniel','Karen','Google US English','Microsoft Aria','Microsoft Jenny','Alex']
   for (const name of preferred) {
     const v = voices.find(v => v.name.includes(name))
     if (v) return v
   }
-  // Prefer non-compact en-US voices
   const enUS = voices.filter(v => v.lang.startsWith('en') && !v.name.includes('Compact'))
   if (enUS.length) return enUS[0]
-
   return voices.find(v => v.lang.startsWith('en')) || null
 }
 
@@ -31,6 +30,18 @@ export function useAudio() {
   const [repsLeft, setRepsLeft] = useState(0)
   const activeRef = useRef(false)
   const countRef  = useRef(0)
+
+  // Call this inside a user gesture (tap) to enable audio on iOS
+  const unlock = useCallback(() => {
+    if (_unlocked || !window.speechSynthesis) return
+    try {
+      window.speechSynthesis.resume()
+      const u = new SpeechSynthesisUtterance(' ')
+      u.volume = 0
+      window.speechSynthesis.speak(u)
+      _unlocked = true
+    } catch {}
+  }, [])
 
   const stop = useCallback(() => {
     activeRef.current = false
@@ -44,6 +55,7 @@ export function useAudio() {
     if (!text || !window.speechSynthesis) return
     activeRef.current = false
     window.speechSynthesis.cancel()
+    window.speechSynthesis.resume()   // iOS sometimes leaves engine paused
     activeRef.current = true
     countRef.current  = 0
     setPlaying(true)
@@ -53,22 +65,19 @@ export function useAudio() {
       if (!activeRef.current || countRef.current >= times) {
         setPlaying(false); setRepsLeft(0); return
       }
-      const utt    = new SpeechSynthesisUtterance(text)
-      utt.lang     = 'en-US'
-      utt.rate     = 0.88   // slightly slower = clearer
-      utt.pitch    = 1.0
-      utt.volume   = 1.0
-      const voice  = getBestVoice()
+      try { window.speechSynthesis.resume() } catch {}
+      const utt  = new SpeechSynthesisUtterance(text)
+      utt.lang   = 'en-US'
+      utt.rate   = 0.88
+      utt.pitch  = 1.0
+      utt.volume = 1.0
+      const voice = getBestVoice()
       if (voice) utt.voice = voice
-
-      utt.onend  = () => {
+      utt.onend = () => {
         countRef.current++
         setRepsLeft(times - countRef.current)
-        if (countRef.current < times && activeRef.current) {
-          setTimeout(next, 700)
-        } else {
-          setPlaying(false); setRepsLeft(0)
-        }
+        if (countRef.current < times && activeRef.current) setTimeout(next, 700)
+        else { setPlaying(false); setRepsLeft(0) }
       }
       utt.onerror = () => { setPlaying(false); setRepsLeft(0) }
       window.speechSynthesis.speak(utt)
@@ -76,5 +85,5 @@ export function useAudio() {
     next()
   }, [])
 
-  return { play, stop, playing, repsLeft }
+  return { play, stop, unlock, playing, repsLeft }
 }

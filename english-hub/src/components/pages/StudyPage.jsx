@@ -42,7 +42,7 @@ export default function StudyPage({ progress, toggleMastered, update }) {
   const [idx,         setIdx]         = useState(0)
   const [revealed,    setRevealed]    = useState(false)
   const [rating,      setRating]      = useState(0)
-  const { play, playing, repsLeft }   = useAudio()
+  const { play, unlock, playing, repsLeft } = useAudio()
   const { stats, inc }                = useTodayStats()
 
   // Filter sentences
@@ -59,7 +59,7 @@ export default function StudyPage({ progress, toggleMastered, update }) {
 
   // Auto-play in Shadow mode
   useEffect(() => {
-    if (mode === 'shadow' && current?.audio) {
+    if (mode === 'shadow' && current?.en) {
       play(current.en, reps)
     }
   }, [idx, mode]) // eslint-disable-line
@@ -80,7 +80,7 @@ export default function StudyPage({ progress, toggleMastered, update }) {
   function reveal() {
     setRevealed(true)
     inc('practiced')
-    if (current?.audio) play(current.en, reps)
+    if (current?.en) play(current.en, reps)
   }
 
   function handleRating(r) {
@@ -105,7 +105,7 @@ export default function StudyPage({ progress, toggleMastered, update }) {
   )
 
   return (
-    <div className="flex flex-col h-full bg-stone-50">
+    <div className="flex flex-col h-full bg-stone-50" onPointerDown={unlock}>
 
       {/* ── Today Stats ── */}
       <div className="bg-white border-b border-stone-100 px-4 py-3">
@@ -132,7 +132,7 @@ export default function StudyPage({ progress, toggleMastered, update }) {
           {/* Mode */}
           <div className="flex bg-stone-100 rounded-lg p-0.5 gap-0.5">
             {[['recall','💬 Recall'],['shadow','🎧 Shadow']].map(([m,l])=>(
-              <button key={m} onClick={()=>{setMode(m);setRevealed(false);setIdx(0)}}
+              <button key={m} onClick={()=>{unlock();setMode(m);setRevealed(false);setIdx(0)}}
                 className={`px-3 py-1.5 rounded-md text-xs font-medium transition-all ${mode===m?'bg-white shadow-sm text-stone-800':'text-stone-500'}`}>
                 {l}
               </button>
@@ -207,7 +207,7 @@ export default function StudyPage({ progress, toggleMastered, update }) {
                   )}
 
                   {/* Replay button */}
-                  <button onClick={()=>current.audio&&play(current.en,reps)}
+                  <button onClick={()=>{unlock();current?.en&&play(current.en,reps)}}
                     className="w-full border border-stone-200 text-stone-600 py-2 rounded-xl text-sm mb-4 hover:bg-stone-50">
                     🔁 Replay ×{reps}
                   </button>
@@ -252,7 +252,7 @@ export default function StudyPage({ progress, toggleMastered, update }) {
               </div>
 
               {/* Replay */}
-              <button onClick={()=>current.audio&&play(current.en,reps)}
+              <button onClick={()=>{unlock();current?.en&&play(current.en,reps)}}
                 className="w-full border border-stone-200 text-stone-600 py-2.5 rounded-xl text-sm mb-3 hover:bg-stone-50">
                 🔁 Replay ×{reps}
               </button>
